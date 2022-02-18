@@ -1,0 +1,45 @@
+# runs-on: self-hosted
+#     steps:
+#       - name: multiple command
+#         uses: appleboy/ssh-action@master
+#         with:
+#            host: ${{ secrets.HOST }}
+#            username: ${{ secrets.USERNAME }}
+#            key: ${{ secrets.KEY }}
+#            port: ${{ secrets.PORT }}
+#            script: |
+#                   whoami
+#                   ls -la
+
+name: "Autoterraform EC2"
+on:
+  push:
+    branches:
+      - main
+
+  AutoEC2:
+    runs-on: ubuntu-latest
+    steps:
+        run: |
+              sed -i "s/TOKEN/${{secrets.TOKEN}}/g" bash.sh
+
+      - name: Checkout repo
+        uses: actions/checkout@main
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+          #----------------------------
+      - name: Terraform init
+        env :
+            AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform init -input=false
+
+          #----------------------------
+      - name: Terraform apply
+        env :
+            AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}        
+        run: terraform apply -input=false
+            #------------------------

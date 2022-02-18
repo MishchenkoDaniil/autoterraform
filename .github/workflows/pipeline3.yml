@@ -1,0 +1,30 @@
+name: "Destroy"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  AutoTerraformDestroy:
+  #_____________________________________________________________________________
+  #Init and Apply creation full infrastructure
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@newpage
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+
+      #----------------------------
+        - name: Terraform Init
+          env:
+            AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+            AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          run: terraform init
+
+      - name: Terraform Destroy
+        env:
+          AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+        run: terraform destroy
