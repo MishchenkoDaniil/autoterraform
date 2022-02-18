@@ -1,4 +1,4 @@
-name: "Autoterraform EC2"
+name: "AutotDestroy EC2"
 on: [workflow_dispatch]
                             # on:
                             #   push:
