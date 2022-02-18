@@ -9,13 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       
-      - run: sed -i "s/TOKEN/${{secrets.TOKEN}}/g" bash.sh
       - name: Checkout repos
         uses: actions/checkout@main
   
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-
+      - run: sed -i "s/TOKEN/${{secrets.TOKEN}}/g" bash.sh
             #----------------------------
       - name: Terraform init
         env :
