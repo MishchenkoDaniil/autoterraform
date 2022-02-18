@@ -1,0 +1,36 @@
+name: "Autoterraform s3_and_table"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  AutoTerraform:
+  #_____________________________________________________________________________
+  #Init and Apply creation full infrastructure
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./s3_and_table
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@main
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      #----------------------------
+      - name: Terraform init
+        env :
+          AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform init -input=false
+
+      #----------------------------
+      - name: Terraform apply
+        env :
+          AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform apply -input=false
+        #------------------------
