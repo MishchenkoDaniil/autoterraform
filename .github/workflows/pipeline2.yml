@@ -12,34 +12,33 @@
 #                   ls -la
 
 name: "Autoterraform EC2"
-on:
-  push:
-    branches:
-      - main
+on: [workflow_dispatch]
+                            # on:
+                            #   push:
+                            #     branches:
+                            #       - main
+AutoEC2:
+      runs-on: ubuntu-latest
+      steps:
+        run: sed -i 's/TOKEN/${{secrets.TOKEN}}/g' bash.sh
 
-  AutoEC2:
-    runs-on: ubuntu-latest
-    steps:
-        run: |
-              sed -i "s/TOKEN/${{secrets.TOKEN}}/g" bash.sh
+          - name: Checkout repos
+            uses: actions/checkout@main
 
-      - name: Checkout repo
-        uses: actions/checkout@main
+          - name: Setup Terraform
+            uses: hashicorp/setup-terraform@v1
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+            #----------------------------
+          - name: Terraform init
+            env :
+              AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
+              AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            run: terraform init -input=false
 
-          #----------------------------
-      - name: Terraform init
-        env :
-            AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform init -input=false
-
-          #----------------------------
-      - name: Terraform apply
-        env :
-            AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}        
-        run: terraform apply -auto-approve
-            #------------------------
+            #----------------------------
+          - name: Terraform apply
+            env :
+              AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
+              AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}        
+            run: terraform apply -auto-approve
+              #------------------------
