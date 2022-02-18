@@ -1,31 +1,31 @@
-name: "Destroy"
+name: "Autoterraform EC2"
 on: [workflow_dispatch]
-# on:
-#   push:
-#     branches:
-#       - main
+                            # on:
+                            #   push:
+                            #     branches:
+                            #       - main
 jobs:
-  AutoTerraformDestroy:
-  #Init and Apply creation full infrastructure
+  AutoEC2:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@main
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
       
-    - run: sed -i "s/TOKEN/${{secrets.TOKEN}}/g" bash.sh
+      - name: Checkout repos
+        uses: actions/checkout@main
+  
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      - run: sed -i "s/TOKEN/${{secrets.TOKEN}}/g" bash.sh
+            #----------------------------
+      - name: Terraform init
+        env :
+              AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
+              AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform init -input=false
 
-      #----------------------------
-    - name: Terraform Init
-      env:
-            AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-            AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-      run: terraform init
-
-    - name: Terraform Destroy
-      env:
-          AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
-          AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-      run: terraform destroy
+            #----------------------------
+      - name: Terraform destroy
+        env :
+              AWS_ACCESS_KEY_ID:          ${{ secrets.AWS_ACCESS_KEY_ID }}
+              AWS_SECRET_ACCESS_KEY:      ${{ secrets.AWS_SECRET_ACCESS_KEY }}        
+        run: terraform destroy -auto-approve
+              #------------------------
