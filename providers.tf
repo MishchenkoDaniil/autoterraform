@@ -2,7 +2,7 @@ terraform {
 required_version = ">=1.1.0"
   backend "s3" {
     bucket  = "itissyncrofazotronbucket"
-    key = "tfstateinbucket"
+    key = "autocp.tfstate"
     region = "eu-central-1"
     encrypt = true
     dynamodb_table = "Terraform"
