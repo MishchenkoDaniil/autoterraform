@@ -1,8 +1,9 @@
 name: "Autoterraform s3_and_table"
-on:
-  push:
-    branches:
-      - main
+on: [workflow_dispatch]
+  # on:
+  #   push:
+  #     branches:
+  #       - main
 jobs:
   AutoTerraform:
   #_____________________________________________________________________________
