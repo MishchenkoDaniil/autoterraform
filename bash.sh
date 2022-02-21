@@ -1,4 +1,7 @@
 #!/bin/bash
+sudo apt install python3 -y
+sudo apt install pip3 -y
+sudo apt upgrade -y
 sudo apt update -y
 sudo apt install nginx -y
 sudo ufw allow 'Nginx HTTP'
