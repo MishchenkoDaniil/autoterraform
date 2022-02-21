@@ -37,5 +37,5 @@ jobs:
         if: always()
         with:
           chat: ${{ env.CHAT }} # user id or channel name secret
-          token: ${{ secrets.token }} # token secret
+          token: ${{ secrets.TOKEN }} # token secret
           status: ${{ job.status }} # do not modify this line
