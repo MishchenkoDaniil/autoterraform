@@ -31,8 +31,9 @@ jobs:
               #------------------------
       
       - name: send telegram message on push
-        uses: appleboy/telegram-action@master
+        uses: yanzay/notify-telegram@v0.1.0
+        if: always()
         with:
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-               Pipeline GOOD!!!
+          chat: ${{ secrets.chat }} # user id or channel name secret
+          token: ${{ secrets.token }} # token secret
+          status: ${{ job.status }} # do not modify this line
