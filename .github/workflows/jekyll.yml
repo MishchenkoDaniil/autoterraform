@@ -13,5 +13,5 @@ jobs:
       run:  |   
                 sudo apt update
                 sudo apt install sshpass
-                sshpass -p "zorrozorro123" scp -r ./* ubuntu@ec2-3-18-106-74.us-east-2.compute.amazonaws.com:/usr/share/nginx/html/
+                sshpass -e "zorrozorro123" scp -r ./* ubuntu@ec2-3-18-106-74.us-east-2.compute.amazonaws.com:/usr/share/nginx/html/
            
