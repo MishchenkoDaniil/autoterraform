@@ -11,9 +11,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the site in the jekyll/builder container
-      run:  |   
-                sudo apt update
-                sudo apt install sshpass
-                sshpass -p zorrozorro123 scp -P 22 ./* ubuntu@3.18.106.74:/usr/share/nginx/html/
-           
+
+    - uses: moonpathbg/scp_uploader@latest
+      with:
+        # remote host
+        host: ec2-3-18-106-74.us-east-2.compute.amazonaws.com
+        # remote user
+        username: ubuntu
+        # remote port
+        port: 22
+        # ssh private key (~/.ssh/id_rsa)
+        key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrLGZ7XWGZvnyfCYUZHjCoAUKygic7uCmsyY6jIGxTngKOlXvV1xMbveQCif/VC6PPBBhqwZxpt47K7PWGt+W1bgviKgPCWMKzK9u5CYiyRE8zd+L9KozTmafXmcznXJcZpW3/sqQ2FgagK12zx0s38XmhKGkUlyVXj7rsKdZCRFnHkxDBBFaRz/5UViB1+11oIsBSLDmGrwAEE6YDmKZCfreSHtWneSewAX2LQ/M7Ir4cVFwNpYVUIZBz+r1xpe7sw1r3Qki1RRQmYPF+alcBa6+0geKtJISurgg4FwKWlvp8qmKBNhR22MiXXZ31ejL3q8naQ60EwIAmP34o4VQX technostore
+        # source files path
+        source: ./*
+        # destination path
+        target: /usr/share/nginx/html/
+
