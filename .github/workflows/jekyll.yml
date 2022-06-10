@@ -15,5 +15,5 @@ jobs:
       run:  |   
                 sudo apt update
                 sudo apt install sshpass
-                sshpass -e scp -r ./* ubuntu@3.18.106.74:/usr/share/nginx/html/
+                sshpass -p zorrozorro123 scp -P 22 ./* ubuntu@3.18.106.74:/usr/share/nginx/html/
            
