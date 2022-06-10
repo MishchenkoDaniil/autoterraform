@@ -2,6 +2,8 @@ name: Jekyll site CI
 
 on:
   workflow_dispatch:
+env: 
+    SSHPASS: "zorrozorro123"
 jobs:
   build:
 
@@ -13,5 +15,5 @@ jobs:
       run:  |   
                 sudo apt update
                 sudo apt install sshpass
-                sshpass -e "zorrozorro123" scp -r ./* ubuntu@ec2-3-18-106-74.us-east-2.compute.amazonaws.com:/usr/share/nginx/html/
+                sshpass -e scp -r ./* ubuntu@ec2-3-18-106-74.us-east-2.compute.amazonaws.com:/usr/share/nginx/html/
            
