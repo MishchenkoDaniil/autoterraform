@@ -10,6 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the site in the jekyll/builder container
-      run:  sudo apt install sshpass
+      run:  | 
+                sudo apt install sshpass
                 sshpass -p "zorrozorro123" scp -r ./* ubuntu@ec2-3-18-106-74.us-east-2.compute.amazonaws.com:/usr/share/nginx/html/
            
